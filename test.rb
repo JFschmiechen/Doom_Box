@@ -8,7 +8,7 @@ end
 monster = Fight.new
 player = Fight.new
 
-
+// CREATE DEAL DAMAGE FUNCTION e.g. monster.setHealth=(player.dealDamage)
 loop do
   loop do
 
