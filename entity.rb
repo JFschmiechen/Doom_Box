@@ -1,9 +1,13 @@
 
 
 class Entity
-  def initialize
-    @name
 
+  attr_reader :size, :strength, :intelligence, :constitution, :speed, :dmgAbsorb, :dexterity, :perception, :hitChance
+  attr_reader :meleeAttack, :spellAttack, :weight, :critChance, :health, :experience, :totalExperience, :playerLevel
+  attr_reader :group, :groupBonus, :initiative, :fireResist, :waterResist, :airResist, :earthResist, :normalWepResist
+  attr_reader :posionResist, :name, :armor, :webbed, :wet, :cold, :freezing, :warm, :burning, :spellHitChance, :teamMem, :monster
+
+  def initialize
     @strength = 5
     @intelligence = 5
     @dexterity = 5
@@ -12,18 +16,7 @@ class Entity
     @speed = 5
     @size = 0
 
-    @group = Array.new
-    @groupBonus
-    @meleeAttack = @strength * 6
-    @spellAttack = @intelligence * 6
-    @weight = @strength * 20
-    @critChance = (@perception * 0.6)
-    @health = 100 + (@constitution * 7)
-    @experience = 0
-    @playerLevel = 1
-    @totalExperience = (@playerLevel * 200)
-    @hitChance = (@dexterity / 2) + (@perception / 2) * 10
-    @initiative = (@speed * 4) + (@dexterity / 2)
+    @behavior
 
     @fireResist = 0
     @waterResist = 0
@@ -39,12 +32,58 @@ class Entity
     @burning = 0
     @cold = 0
     @freezing = 0
+
+    @name = ""
+    @meleeAttack = 0
+    @spellAttack = 0
+    @weight = 0
+    @critChance = 0
+    @health = 0
+    @experience = 0
+    @playerLevel = 0
+    @totalExperience = 0
+    @hitChance = 0
+    @spellHitChance = 0
+    @initiative = 0
+    @teamMem = "FALSE"
+    @monster = "FALSE"
   end
 
-  attr_reader :size, :strength, :intelligence, :dexterity, :constitution, :perception, :speed, :hitChance
-  attr_reader :meleeAttack, :spellAttack, :weight, :critChance, :health, :experience, :totalExperience, :playerLevel
-  attr_reader :group, :groupBonus, :initiative, :fireResist, :waterResist, :airResist, :earthResist, :normalWepResist, :dmgAbsorb
-  attr_reader :posionResist, :name, :armor, :webbed, :wet, :cold, :freezing, :warm, :burning
+  def modifyAttribute(object)
+    @name
+    @group = Array.new
+    @groupBonus
+    @meleeAttack = object.strength * 6
+    @spellAttack = object.intelligence * 6
+    @weight = object.strength * 20
+    @critChance = (object.perception * 2)
+    @health = 100 + (object.constitution * 7)
+    @experience = 0
+    @playerLevel = 1
+    @totalExperience = (object.playerLevel * 200)
+    @hitChance = (((object.dexterity / 2) + (object.perception / 2)) * 10)
+    @spellHitChance = (object.intelligence / 2) + (object.perception / 2) * 10
+    @initiative = (object.speed * 4) + (object.dexterity / 2)
+  end
+end
+
+public
+
+  def setMonster=(modifier)
+    @monster = modifier
+  end
+
+  def setTeamMem=(modifier)
+    @teamMem = modifier
+  end
+
+  def setHitChance=(modifier)
+    @hitChance += modifier
+  end
+
+  def setSpellHitChance=(modifier)
+    @spellHitChance += modifier
+  end
 
   def setWebbed=(modifier)
     @webbed += modifier
@@ -161,43 +200,3 @@ class Entity
   def setName=(modifier)
     @name = modifier
   end
-
-  def levelUp
-    if @experience >= @totalExperience
-      @PlayerLevel += 1
-      puts "You have leveled up! Choose one attribute to increase."
-
-        puts "1.  Strength"
-        puts "2.  Intelligence"
-        puts "3.  Dexterity"
-        puts "4.  Constitution"
-        puts "5.  Perception"
-        puts "6.  Speed"
-
-        chosenAttribute = gets.to_i
-
-      case chosenAttribute
-        when 1
-          @strength += 1
-          puts "Your strength is now #{strength}"
-        when 2
-          @intelligence += 1
-          puts "Your intelligence is now #{intelligence}"
-        when 3
-          @dexterity += 1
-          puts "Your dexterity is now #{dexterity}"
-        when 4
-          @constitution += 1
-          puts "Your constitution is now #{constitution}"
-        when 5
-          @perception += 1
-          puts "Your perception is now #{perception}"
-        when 6
-          @speed += 1
-          puts "Your speed is now #{speed}"
-      end
-    else
-       puts "You live another day"
-    end
-  end
-end

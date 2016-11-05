@@ -2,8 +2,9 @@ require_relative "entity"
 
 class Insect < Entity  # Mosquito, Centipede, Spider, Ant, Maggot, Beetle
   def modifyAttribute(object)
-    object.setSize=(3)
+    object.setSize=(1)
     object.setHealth=(-50)
+    object.setConstitution=(-5)
     object.setEarthResist=(25)
     object.setFireResist=(-50)
     object.setAirResist=(-25)
@@ -11,17 +12,20 @@ class Insect < Entity  # Mosquito, Centipede, Spider, Ant, Maggot, Beetle
     object.setDexterity=(2)
     object.setIntelligence=(-3)
     object.setPoisonResist=(50)
+    object.setMonster=("TRUE")
+    super(object)
   end
 end
 
 class Human < Entity  # Sorcerer, Bandit, Human, Orc, Goblin
   def modifyAttribute(object)
-    object.setIntelligence=(1)
+    object.setIntelligence=(3)
     object.setSize=(5)
     object.setPerception=(-1)
     object.setConstitution=(1)
-    object.setDexterity=(1)
+    object.setDexterity=(2)
     object.setPoisonResist=(-25)
+    super(object)
   end
 end
 
@@ -71,10 +75,10 @@ end
 
 class Mosquito < Insect
   def modifyAttribute(object)
-    setName=("Mosquito")
-    setSpeed=(2)
-    setConstitution=(-4)
-    setFireResist=(-25)
+    object.setName=("Mosquito")
+    object.setSpeed=(2)
+    object.setConstitution=(-4)
+    object.setFireResist=(-25)
     super(object)
   end
 end
@@ -195,6 +199,25 @@ class Maggot < Insect
     setStrength=(-4)
     setIntelligence=(-7)
     setFireResist=(-100)
+    super(object)
+  end
+end
+
+class Abil < Human
+  def modifyAttribute(object)
+    object.setName=("Abil")
+    object.setSpeed=(10)
+    object.setTeamMem=("TRUE")
+    super(object)
+  end
+end
+
+class Player < Human
+  def modifyAttribute(object)
+    object.setName=("TheOneTrueGod")
+    object.setDexterity=(10)
+    object.setPerception=(10)
+    #object.setStrength=(10)
     super(object)
   end
 end
